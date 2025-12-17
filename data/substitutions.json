@@ -1,353 +1,486 @@
 [
 	{
-	  "ingredient": "baking powder",
-	  "recipeTypes": ["cake", "cookie", "bread", "other"],
-	  "substitutes": [
-		{
-		  "name": "cream of tartar + baking soda",
-		  "baseAmount": "1 teaspoon baking powder",
-		  "substituteAmount": "1/2 teaspoon cream of tartar + 1/4 teaspoon baking soda, bake immediately",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {
-			"rise": "similar"
+		"ingredient": "baking powder",
+		"recipeTypes": ["cake", "cookie", "bread", "other"],
+		"substitutes": [
+		  {
+			"name": "cream of tartar + baking soda",
+			"baseAmount": {
+			  "ingredient": "baking powder",
+			  "quantity": 1,
+			  "unit": "teaspoon"
+			},
+			"substitution": [
+			  { "ingredient": "cream of tartar", "quantity": 0.5, "unit": "teaspoon" },
+			  { "ingredient": "baking soda", "quantity": 0.25, "unit": "teaspoon" }
+			],
+			"instructions": "Bake immediately",
+			"tags": ["vegetarian", "gluten free"],
+			"effects": { "rise": "similar" },
+			"confidence": 0.9
+		  }
+		]
+	  },
+	  {
+		"ingredient": "baking soda",
+		"recipeTypes": ["cake", "cookie", "bread", "other"],
+		"substitutes": [
+		  {
+			"name": "baking powder",
+			"baseAmount": {
+			  "ingredient": "baking soda",
+			  "quantity": 0.25,
+			  "unit": "teaspoon"
+			},
+			"substitution": [
+			  { "ingredient": "baking powder", "quantity": 1, "unit": "teaspoon" }
+			],
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {
+			  "rise": "less",
+			  "flavor": "more tangy"
+			},
+			"confidence": 0.8
+		  }
+		]
+	  },
+	  {
+		"ingredient": "bread crumbs",
+		"recipeTypes": ["bread", "other"],
+		"substitutes": [
+		  {
+			"name": "ground oats or cereal",
+			"baseAmount": {
+			  "ingredient": "bread crumbs",
+			  "quantity": 1,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "ground rolled oats or crushed cereal", "quantity": 1, "unit": "cup" }
+			],
+			"tags": ["vegetarian", "vegan", "gluten free"],
+			"effects": {},
+			"confidence": 0.8
+		  }
+		]
+	  },
+	  {
+		"ingredient": "bread flour",
+		"recipeTypes": ["bread", "other"],
+		"substitutes": [
+		  {
+			"name": "all-purpose flour",
+			"baseAmount": {
+			  "ingredient": "bread flour",
+			  "quantity": 1,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "all-purpose flour", "quantity": 1, "unit": "cup" }
+			],
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {
+			  "rise": "slightly less",
+			  "texture": "slightly denser"
+			},
+			"confidence": 0.9
+		  }
+		]
+	  },
+	  {
+		"ingredient": "brown sugar",
+		"recipeTypes": ["cake", "cookie", "bread", "other"],
+		"substitutes": [
+		  {
+			"name": "granulated sugar + molasses",
+			"baseAmount": {
+			  "ingredient": "brown sugar",
+			  "quantity": 1,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "granulated sugar", "quantity": 0.95, "unit": "cup" },
+			  { "ingredient": "molasses", "quantity": 1, "unit": "tablespoon" }
+			],
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {
+			  "flavor": "slightly less rich",
+			  "moisture": "slightly less"
+			},
+			"confidence": 0.9
+		  }
+		]
+	  },
+	  {
+		"ingredient": "butter",
+		"recipeTypes": ["cake", "cookie", "bread", "other"],
+		"substitutes": [
+		  {
+			"name": "coconut oil",
+			"baseAmount": {
+			  "ingredient": "butter",
+			  "quantity": 1,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "coconut oil", "quantity": 1, "unit": "cup" }
+			],
+			"tags": ["vegan", "gluten free"],
+			"effects": {
+			  "texture": "slightly denser"
+			},
+			"confidence": 0.8
 		  },
-		  "confidence": 0.9
-		}
-	  ]
-	},
-	{
-	  "ingredient": "baking soda",
-	  "recipeTypes": ["cake", "cookie", "bread", "other"],
-	  "substitutes": [
-		{
-		  "name": "baking powder",
-		  "baseAmount": "1/4 teaspoon baking soda",
-		  "substituteAmount": "1 teaspoon baking powder",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {
-			"rise": "less",
-			"flavor": "more tangy"
+		  {
+			"name": "lard or margarine",
+			"baseAmount": {
+			  "ingredient": "butter",
+			  "quantity": 1,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "lard or margarine", "quantity": 1, "unit": "cup" }
+			],
+			"tags": ["gluten free"],
+			"effects": {
+			},
+			"confidence": 0.7
+		  }
+		]
+	  },
+	  {
+		"ingredient": "buttermilk",
+		"recipeTypes": ["cake", "bread", "other"],
+		"substitutes": [
+		  {
+			"name": "yogurt",
+			"baseAmount": {
+			  "ingredient": "buttermilk",
+			  "quantity": 1,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "plain yogurt", "quantity": 1, "unit": "cup" }
+			],
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {},
+			"confidence": 0.9
 		  },
-		  "confidence": 0.8
-		}
-	  ]
-	},
-	{
-	  "ingredient": "bread crumbs",
-	  "recipeTypes": ["bread", "other"],
-	  "substitutes": [
-		{
-		  "name": "ground rolled oats or crushed cereal",
-		  "baseAmount": "as needed",
-		  "substituteAmount": "equal volume of ground rolled oats or crushed cereal",
-		  "tags": ["vegetarian", "vegan", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.8
-		}
-	  ]
-	},
-	{
-	  "ingredient": "bread flour",
-	  "recipeTypes": ["bread", "other"],
-	  "substitutes": [
-		{
-		  "name": "all-purpose flour",
-		  "baseAmount": "1 cup bread flour",
-		  "substituteAmount": "1 cup all-purpose flour",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {
-			"rise": "slightly less",
-			"texture": "slightly denser"
+		  {
+			"name": "milk + vinegar or lemon juice",
+			"baseAmount": {
+			  "ingredient": "buttermilk",
+			  "quantity": 1,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "milk", "quantity": 1, "unit": "cup" },
+			  { "ingredient": "vinegar or lemon juice", "quantity": 1, "unit": "tablespoon" }
+			],
+			"instructions": "Mix and let sit for 10 minutes before using",
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {},
+			"confidence": 0.8
+		  }
+		]
+	  },
+	  {
+		"ingredient": "cake flour",
+		"recipeTypes": ["cake"],
+		"substitutes": [
+		  {
+			"name": "all-purpose flour + cornstarch",
+			"baseAmount": {
+			  "ingredient": "cake flour",
+			  "quantity": 1,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "all-purpose flour", "quantity": 0.875, "unit": "cup" },
+			  { "ingredient": "cornstarch", "quantity": 2, "unit": "tablespoon" }
+			],
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {
+			  "texture": "slightly denser"
+			},
+			"confidence": 0.9
+		  }
+		]
+	  },
+	  {
+		"ingredient": "cornstarch",
+		"recipeTypes": ["cake", "cookie", "other"],
+		"substitutes": [
+		  {
+			"name": "all-purpose flour",
+			"baseAmount": {
+			  "ingredient": "cornstarch",
+			  "quantity": 1,
+			  "unit": "tablespoon"
+			},
+			"substitution": [
+			  { "ingredient": "all-purpose flour", "quantity": 1.5, "unit": "tablespoon" }
+			],
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {},
+			"confidence": 0.8
+		  }
+		]
+	  },
+	  {
+		"ingredient": "cream of tartar",
+		"recipeTypes": ["cake", "cookie"],
+		"substitutes": [
+		  {
+			"name": "lemon juice",
+			"baseAmount": {
+			  "ingredient": "cream of tartar",
+			  "quantity": 0.25,
+			  "unit": "teaspoon"
+			},
+			"substitution": [
+			  { "ingredient": "lemon juice", "quantity": 0.5, "unit": "teaspoon" }
+			],
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {},
+			"confidence": 0.8
+		  }
+		]
+	  },
+	  {
+		"ingredient": "eggs",
+		"recipeTypes": ["cookie", "bread", "other"],
+		"substitutes": [
+		  {
+			"name": "flax egg",
+			"baseAmount": {
+			  "ingredient": "egg",
+			  "quantity": 1,
+			  "unit": "unit"
+			},
+			"substitution": [
+			  { "ingredient": "ground flaxseed", "quantity": 1, "unit": "tablespoon" },
+			  { "ingredient": "warm water", "quantity": 3, "unit": "tablespoon" }
+			],
+			"instructions": "Mix and let sit for 5 minutes before using",
+			"tags": ["vegan"],
+			"effects": {
+			  "rise": "less",
+			  "texture": "denser",
+			  "spread": "slightly more"
+			},
+			"confidence": 0.9
+		  }
+		]
+	  },
+	  {
+		"ingredient": "evaporated milk",
+		"recipeTypes": ["cake", "bread", "other"],
+		"substitutes": [
+		  {
+			"name": "half-and-half",
+			"baseAmount": {
+			  "ingredient": "evaporated milk",
+			  "quantity": 1,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "half-and-half", "quantity": 1, "unit": "cup" }
+			],
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {},
+			"confidence": 0.8
+		  }
+		]
+	  },
+	  {
+		"ingredient": "half-and-half",
+		"recipeTypes": ["cake", "bread", "other"],
+		"substitutes": [
+		  {
+			"name": "milk + cream",
+			"baseAmount": {
+			  "ingredient": "half-and-half",
+			  "quantity": 1.0,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "milk", "quantity": 0.5, "unit": "cup" },
+			  { "ingredient": "cream", "quantity": 0.5, "unit": "cup" }
+			],
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {},
+			"confidence": 0.9
 		  },
-		  "confidence": 0.9
-		}
-	  ]
-	},
-	{
-	  "ingredient": "brown sugar",
-	  "recipeTypes": ["cake", "cookie", "bread", "other"],
-	  "substitutes": [
-		{
-		  "name": "granulated sugar + molasses",
-		  "baseAmount": "1 cup brown sugar",
-		  "substituteAmount": "1 scant cup granulated sugar + 1 tablespoon molasses",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {
-			"flavor": "slightly less rich",
-			"moisture": "slightly less"
+		  {
+			"name": "non-dairy coffee creamer",
+			"baseAmount": {
+			  "ingredient": "half-and-half",
+			  "quantity": 1.0,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "non-dairy coffee creamer", "quantity": 1.0, "unit": "cup" }
+			],
+			"tags": [],
+			"effects": {},
+			"confidence": 0.8
+		  }
+		]
+	  },
+	  {
+		"ingredient": "heavy cream",
+		"recipeTypes": ["cake", "bread", "other"],
+		"substitutes": [
+		  {
+			"name": "milk + butter",
+			"baseAmount": {
+			  "ingredient": "heavy cream",
+			  "quantity": 1,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "milk", "quantity": 1, "unit": "cup" },
+			  { "ingredient": "butter", "quantity": 1, "unit": "tablespoon" }
+			],
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {},
+			"confidence": 0.9
 		  },
-		  "confidence": 0.9
-		}
-	  ]
-	},
-	{
-	  "ingredient": "butter",
-	  "recipeTypes": ["cake", "cookie", "bread", "other"],
-	  "substitutes": [
-		{
-		  "name": "coconut oil",
-		  "baseAmount": "1 cup butter",
-		  "substituteAmount": "1 cup coconut oil",
-		  "tags": ["vegan", "gluten free"],
-		  "effects": {
-			"texture": "slightly denser"
+		  {
+			"name": "butter + milk or half-and-half",
+			"baseAmount": {
+			  "ingredient": "heavy cream",
+			  "quantity": 1,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "butter", "quantity": 0.25, "unit": "cup" },
+			  { "ingredient": "milk or half-and-half", "quantity": 0.75, "unit": "cup" }
+			],
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {},
+			"confidence": 0.8
+		  }
+		]
+	  },
+	  {
+		"ingredient": "honey",
+		"recipeTypes": ["cake", "cookie", "bread", "other"],
+		"substitutes": [
+		  {
+			"name": "alternative liquid sweeteners",
+			"baseAmount": {
+			  "ingredient": "honey",
+			  "quantity": 1,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "corn syrup or molasses or maple syrup or agave nectar", "quantity": 1, "unit": "cup" }
+			],
+			"tags": ["vegan", "gluten free"],
+			"effects": {},
+			"confidence": 0.8
+		  }
+		]
+	  },
+	  {
+		"ingredient": "lemon juice",
+		"recipeTypes": ["cake", "cookie", "bread", "other"],
+		"substitutes": [
+		  {
+			"name": "apple cider vinegar",
+			"baseAmount": {
+			  "ingredient": "lemon juice",
+			  "quantity": 1,
+			  "unit": "teaspoon"
+			},
+			"substitution": [
+			  { "ingredient": "apple cider vinegar", "quantity": 0.5, "unit": "teaspoon" }
+			],
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {},
+			"confidence": 0.8
+		  }
+		]
+	  },
+	  {
+		"ingredient": "powdered sugar",
+		"recipeTypes": ["cake", "cookie", "other"],
+		"substitutes": [
+		  {
+			"name": "ground granulated sugar",
+			"baseAmount": {
+			  "ingredient": "powdered sugar",
+			  "quantity": 0.5,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "granulated sugar", "quantity": 0.5, "unit": "cup" }
+			],
+			"instructions": "Grind in blender until fine",
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {},
+			"confidence": 0.9
+		  }
+		]
+	  },
+	  {
+		"ingredient": "semi-sweet chocolate",
+		"recipeTypes": ["cake", "cookie", "other"],
+		"substitutes": [
+		  {
+			"name": "unsweetened chocolate + sugar",
+			"baseAmount": {
+			  "ingredient": "semi-sweet chocolate",
+			  "quantity": 1,
+			  "unit": "ounce"
+			},
+			"substitution": [
+			  { "ingredient": "unsweetened chocolate", "quantity": 1, "unit": "ounce" },
+			  { "ingredient": "granulated sugar", "quantity": 0.5, "unit": "teaspoon" }
+			],
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {},
+			"confidence": 0.9
 		  },
-		  "confidence": 0.8
-		},
-		{
-		  "name": "lard or margarine",
-		  "baseAmount": "1 cup butter",
-		  "substituteAmount": "1 cup lard or margarine",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.7
-		}
-	  ]
-	},
-	{
-	  "ingredient": "buttermilk",
-	  "recipeTypes": ["cake", "bread", "other"],
-	  "substitutes": [
-		{
-		  "name": "yogurt",
-		  "baseAmount": "1 cup buttermilk",
-		  "substituteAmount": "1 cup plain yogurt (not Greek)",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.9
-		},
-		{
-		  "name": "milk + vinegar/lemon juice",
-		  "baseAmount": "1 cup buttermilk",
-		  "substituteAmount": "1 cup milk + 1 tbsp vinegar or lemon juice, sit 10 min",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.8
-		}
-	  ]
-	},
-	{
-	  "ingredient": "cake flour",
-	  "recipeTypes": ["cake"],
-	  "substitutes": [
-		{
-		  "name": "all-purpose flour + cornstarch",
-		  "baseAmount": "1 cup cake flour",
-		  "substituteAmount": "1 cup minus 2 tbsp all-purpose flour + 2 tbsp cornstarch",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {
-			"texture": "slightly denser"
-		  },
-		  "confidence": 0.9
-		}
-	  ]
-	},
-	{
-	  "ingredient": "cornstarch",
-	  "recipeTypes": ["cake", "cookie", "other"],
-	  "substitutes": [
-		{
-		  "name": "all-purpose flour",
-		  "baseAmount": "1 tbsp cornstarch",
-		  "substituteAmount": "1.5 tbsp all-purpose flour",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.8
-		}
-	  ]
-	},
-	{
-	  "ingredient": "cream of tartar",
-	  "recipeTypes": ["cake", "cookie"],
-	  "substitutes": [
-		{
-		  "name": "lemon juice",
-		  "baseAmount": "1/4 tsp cream of tartar",
-		  "substituteAmount": "1/2 tsp lemon juice",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.8
-		}
-	  ]
-	},
-	{
-	  "ingredient": "eggs",
-	  "recipeTypes": ["cake", "cookie", "bread", "pancakes", "waffles"],
-	  "substitutes": [
-		{
-		  "name": "flax egg",
-		  "baseAmount": "1 egg",
-		  "substituteAmount": "1 tbsp ground flaxseed + 3 tbsp water, sit 5 min",
-		  "tags": ["vegan"],
-		  "effects": {
-			"rise": "less",
-			"texture": "denser",
-			"spread": "slightly more"
-		  },
-		  "confidence": 0.9
-		},
-		{
-		  "name": "flax meal for breads/cookies",
-		  "baseAmount": "1 egg",
-		  "substituteAmount": "2 tbsp ground flax meal + 3 tbsp cold water, sit 10 min",
-		  "tags": ["vegan"],
-		  "effects": {
-			"rise": "less",
-			"texture": "denser"
-		  },
-		  "confidence": 0.8
-		}
-	  ]
-	},
-	{
-	  "ingredient": "evaporated milk",
-	  "recipeTypes": ["cake", "bread", "other"],
-	  "substitutes": [
-		{
-		  "name": "half-and-half",
-		  "baseAmount": "1 cup evaporated milk",
-		  "substituteAmount": "1 cup half-and-half",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.8
-		}
-	  ]
-	},
-	{
-	  "ingredient": "half-and-half",
-	  "recipeTypes": ["cake", "bread", "other"],
-	  "substitutes": [
-		{
-		  "name": "milk + cream",
-		  "baseAmount": "1/2 cup half-and-half",
-		  "substituteAmount": "1/4 cup milk + 1/4 cup cream",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.9
-		},
-		{
-		  "name": "non-dairy coffee creamer",
-		  "baseAmount": "1/2 cup half-and-half",
-		  "substituteAmount": "1/2 cup non-dairy coffee creamer",
-		  "tags": ["vegan"],
-		  "effects": {},
-		  "confidence": 0.8
-		}
-	  ]
-	},
-	{
-	  "ingredient": "heavy cream",
-	  "recipeTypes": ["cake", "bread", "other"],
-	  "substitutes": [
-		{
-		  "name": "milk + butter",
-		  "baseAmount": "1 cup heavy cream",
-		  "substituteAmount": "1 cup milk + 1 tbsp melted butter",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.9
-		},
-		{
-		  "name": "melted butter + milk/half-and-half",
-		  "baseAmount": "1 cup heavy cream",
-		  "substituteAmount": "1/4 cup unsalted butter + 3/4 cup milk or half-and-half",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.8
-		}
-	  ]
-	},
-	{
-	  "ingredient": "honey",
-	  "recipeTypes": ["cake", "cookie", "bread", "other"],
-	  "substitutes": [
-		{
-		  "name": "corn syrup, molasses, maple syrup, or agave nectar",
-		  "baseAmount": "1 cup honey",
-		  "substituteAmount": "1 cup of any listed substitute",
-		  "tags": ["vegan", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.8
-		}
-	  ]
-	},
-	{
-	  "ingredient": "lemon juice",
-	  "recipeTypes": ["cake", "cookie", "bread", "other"],
-	  "substitutes": [
-		{
-		  "name": "apple cider vinegar",
-		  "baseAmount": "1 tsp lemon juice",
-		  "substituteAmount": "1/2 tsp apple cider vinegar",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.8
-		}
-	  ]
-	},
-	{
-	  "ingredient": "mascarpone",
-	  "recipeTypes": ["cake", "dessert", "other"],
-	  "substitutes": [
-		{
-		  "name": "cream cheese + cream + sour cream",
-		  "baseAmount": "16 ounces mascarpone",
-		  "substituteAmount": "12 ounces cream cheese + 1/4 cup heavy cream + 1/4 cup sour cream",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.8
-		}
-	  ]
-	},
-	{
-	  "ingredient": "powdered sugar",
-	  "recipeTypes": ["cake", "cookie", "other"],
-	  "substitutes": [
-		{
-		  "name": "grind granulated sugar",
-		  "baseAmount": "1/2 cup powdered sugar",
-		  "substituteAmount": "1/2 cup granulated sugar ground in blender",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.9
-		}
-	  ]
-	},
-	{
-	  "ingredient": "semi-sweet chocolate",
-	  "recipeTypes": ["cake", "cookie", "other"],
-	  "substitutes": [
-		{
-		  "name": "unsweetened chocolate + sugar",
-		  "baseAmount": "1 ounce semi-sweet chocolate",
-		  "substituteAmount": "1 ounce unsweetened chocolate + 1/2 tsp sugar",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.9
-		},
-		{
-		  "name": "cocoa + sugar + butter/oil",
-		  "baseAmount": "1 ounce semi-sweet chocolate",
-		  "substituteAmount": "3 tbsp cocoa powder + 3 tbsp sugar + 1 tbsp butter or oil",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.8
-		}
-	  ]
-	},
-	{
-	  "ingredient": "sour cream",
-	  "recipeTypes": ["cake", "bread", "other"],
-	  "substitutes": [
-		{
-		  "name": "plain yogurt",
-		  "baseAmount": "1 cup sour cream",
-		  "substituteAmount": "1 cup plain yogurt",
-		  "tags": ["vegetarian", "gluten free"],
-		  "effects": {},
-		  "confidence": 0.9
-		}
-	  ]
-	}
+		  {
+			"name": "cocoa + sugar + butter or oil",
+			"baseAmount": {
+			  "ingredient": "semi-sweet chocolate",
+			  "quantity": 1,
+			  "unit": "ounce"
+			},
+			"substitution": [
+			  { "ingredient": "cocoa powder", "quantity": 3, "unit": "tablespoon" },
+			  { "ingredient": "granulated sugar", "quantity": 3, "unit": "tablespoon" },
+			  { "ingredient": "butter or oil", "quantity": 1, "unit": "tablespoon" }
+			],
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {},
+			"confidence": 0.8
+		  }
+		]
+	  },
+	  {
+		"ingredient": "sour cream",
+		"recipeTypes": ["cake", "bread", "other"],
+		"substitutes": [
+		  {
+			"name": "plain yogurt",
+			"baseAmount": {
+			  "ingredient": "sour cream",
+			  "quantity": 1,
+			  "unit": "cup"
+			},
+			"substitution": [
+			  { "ingredient": "plain yogurt", "quantity": 1, "unit": "cup" }
+			],
+			"tags": ["vegetarian", "gluten free"],
+			"effects": {},
+			"confidence": 0.9
+		  }
+		]
+	  }
   ]
   

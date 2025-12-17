@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --color-zinc-50: #fafafa;
+  --color-zinc-900: #111827;
 }
 
 @theme inline {
@@ -16,11 +18,11 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --color-zinc-50: #111827;  /* dark background equivalent */
+    --color-zinc-900: #fafafa; /* light text equivalent */
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }

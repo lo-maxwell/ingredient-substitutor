@@ -41,7 +41,7 @@ A Next.js web app allowing users to find ingredient substitutions for baking rec
 * Create static JSON file with ~8–10 core ingredients and substitutes
 * Implement deterministic rules-based lookup logic
 * Filter by recipe type and dietary constraints
-* Sort by confidence and return top 1–2 substitutions
+* Sort by confidence and return top substitutions
 
 ### Day 2: Web UI
 

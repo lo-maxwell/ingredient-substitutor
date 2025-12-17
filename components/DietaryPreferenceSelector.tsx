@@ -3,37 +3,38 @@
 import { Autocomplete, Checkbox, TextField } from "@mui/material";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { RecipeType } from "@/backend/Ingredient";
+import { engine } from "@/backend/SubstitutionEngine";
+import React from "react";
 
-type RecipeTypeSelectorProps = {
-  value: RecipeType[];
-  onChange: (value: RecipeType[]) => void;
+type DietaryPreferenceSelectorProps = {
+  value: string[];
+  onChange: (value: string[]) => void;
 };
-
-export const ALL_RECIPE_TYPES: RecipeType[] = [
-  "cake",
-  "cookie",
-  "bread",
-  "pancakes",
-  "waffles",
-  "dessert",
-  "other",
-];
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export function RecipeTypeSelector({ value, onChange }: RecipeTypeSelectorProps) {
+export function DietaryPreferenceSelector({
+  value,
+  onChange,
+}: DietaryPreferenceSelectorProps) {
+	const [options, setOptions] = React.useState<string[]>([]);
+
+  React.useEffect(() => {
+    engine.init();
+    setOptions(engine.getAllDietaryPreferences());
+  }, []);
+
   return (
     <Autocomplete
       multiple
-      options={ALL_RECIPE_TYPES}
+      options={options}
       value={value}
       onChange={(_, newValue) => onChange(newValue)}
       disableCloseOnSelect
       getOptionLabel={(option) => option}
       renderOption={(props, option, { selected }) => {
-        const { key, ...rest } = props;
+        const { key, ...rest } = props; // remove key from spread
         return (
           <li key={key} {...rest} className={`${selected ? "bg-blue-100" : ""}`}>
             <Checkbox
@@ -49,8 +50,8 @@ export function RecipeTypeSelector({ value, onChange }: RecipeTypeSelectorProps)
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Recipe Types"
-          placeholder="Select recipe types"
+          label="Dietary Preferences"
+          placeholder="Select dietary preferences"
           variant="outlined"
           fullWidth
         />
