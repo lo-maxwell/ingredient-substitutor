@@ -1,3 +1,5 @@
+import { lightTheme } from "@/src/theme/mui-theme";
+import { ThemeProvider } from "@mui/material";
 import "./globals.css";
 
 export default function RootLayout({
@@ -10,7 +12,9 @@ export default function RootLayout({
       <head>
       </head>
       <body>
-            {children}
+      <ThemeProvider theme={lightTheme}>
+        {children}
+      </ThemeProvider>
       </body>
     </html>
   );

@@ -1,77 +1,153 @@
 "use client";
+
+import { useTheme } from "@mui/material/styles";
 import { RecipeType } from "@/backend/Ingredient";
 import { DietaryPreferenceSelector } from "@/components/DietaryPreferenceSelector";
 import { IngredientSelector } from "@/components/IngredientSelector";
 import { ALL_RECIPE_TYPES, RecipeTypeSelector } from "@/components/RecipeTypeSelector";
+import { ResultsCard } from "@/components/ResultsCard";
 import { useState } from "react";
+import { Button, Tooltip, Paper, Typography, Box } from "@mui/material";
+import { engine } from "@/backend/SubstitutionEngine";
+import { Substitute } from "@/backend/Substitute";
+
+// Import your substitution engine
 
 export default function Home() {
+  const theme = useTheme();
   const [ingredient, setIngredient] = useState<string | null>(null);
   const [pref, setPref] = useState<string[]>([]);
   const [recipeType, setRecipeType] = useState<RecipeType[]>([...ALL_RECIPE_TYPES]);
-    
+  const [showResults, setShowResults] = useState(false);
+  const [results, setResults] = useState<Substitute[] | null>(null);
+
+  const handleSubmit = () => {
+    if (!ingredient) return;
+
+    // Query your substitution engine
+    const substitutes = engine.getSubstitutes(
+      ingredient,
+      recipeType,
+      pref,
+    );
+
+    setResults(substitutes);
+    setShowResults(true);
+  };
+
   return (
-    <div className="min-h-screen bg-zinc-600 text-zinc-900">
-      {/* Top Bar */}
-      <div className="flex justify-end p-4">
-        {/* Could add other buttons here if needed */}
-      </div>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.primary,
+        py: 6,
+        px: 6,
+      }}
+    >
+      <Box display="flex" justifyContent="center">
+        <Paper
+          elevation={3}
+          sx={{
+            width: "100%",
+            maxWidth: 720,
+            borderRadius: 3,
+            p: 4,
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary,
+          }}
+        >
+          {!showResults ? (
+            <>
+              {/* Header */}
+              <Box textAlign="center" mb={6}>
+                <Typography variant="h2" fontWeight={600}>
+                  Baking Ingredient Substitutor
+                </Typography>
+                <Typography variant="body1" color="text.secondary" mt={1}>
+                  Instantly find reliable ingredient substitutions and understand how they’ll affect your recipe.
+                </Typography>
+              </Box>
 
-      {/* Main Content */}
-      <div className="flex items-center justify-center px-6">
-        <main className="w-full max-w-3xl rounded-2xl bg-white p-10 shadow-sm">
-          {/* Header */}
-          <header className="mb-10 text-center">
-            <h1 className="text-4xl !text-zinc-800 font-semibold tracking-tight">
-              Baking Ingredient Substitutor
-            </h1>
-            <p className="mt-4 text-lg text-zinc-600">
-              Instantly find reliable ingredient substitutions and understand how
-              they’ll affect your recipe.
-            </p>
-          </header>
+              {/* Form */}
+              <Box display="flex" flexDirection="column" gap={3}>
+                <Box>
+                  <Typography variant="body2" fontWeight={500} mb={1}>
+                    Recipe Type
+                  </Typography>
+                  <RecipeTypeSelector value={recipeType} onChange={setRecipeType} />
+                </Box>
 
-          {/* Form */}
-          <section className="flex flex-col gap-6">
-            {/* Recipe Type */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-zinc-700">
-                Recipe Type
-              </label>
-              <RecipeTypeSelector value={recipeType} onChange={setRecipeType}/>
-            </div>
+                <Box>
+                  <Typography variant="body2" fontWeight={500} mb={1}>
+                    Ingredient to Substitute
+                  </Typography>
+                  <IngredientSelector value={ingredient} onChange={setIngredient} />
+                </Box>
 
-            {/* Ingredient */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-zinc-700">
-                Ingredient to Substitute
-              </label>
-              <IngredientSelector value={ingredient} onChange={setIngredient} />
-            </div>
+                <Box>
+                  <Typography variant="body2" fontWeight={500} mb={1}>
+                    Dietary Preferences
+                  </Typography>
+                  <DietaryPreferenceSelector value={pref} onChange={setPref} />
+                </Box>
 
-            {/* Dietary Constraints */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-zinc-700">
-                Dietary Preferences
-              </label>
-              <DietaryPreferenceSelector value={pref} onChange={setPref} />
-            </div>
+                <Tooltip
+                  title={
+                    !ingredient
+                      ? "Please select an ingredient first"
+                      : recipeType.length === 0
+                        ? "Please select at least one recipe type"
+                        : ""
+                  }
+                  arrow
+                >
+                  <span>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      fullWidth
+                      disabled={!ingredient || recipeType.length === 0}
+                      onClick={handleSubmit}
+                      sx={{ mt: 2 }}
+                    >
+                      Find Substitutes
+                    </Button>
+                  </span>
+                </Tooltip>
+              </Box>
+            </>
+          ) : (
+            <>
+              {/* Results Header */}
+              <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+                <Typography variant="h5" fontWeight={600}>
+                  Substitutes for {ingredient}
+                </Typography>
+                <Button variant="text" size="small" onClick={() => setShowResults(false)}>
+                  ← Back
+                </Button>
+              </Box>
 
-            {/* CTA */}
-            <button
-              disabled
-              className="mt-4 h-12 w-full rounded-md bg-zinc-900 text-white opacity-50"
-            >
-              Find Substitutes
-            </button>
-          </section>
+              {/* Results */}
+              <Box display="flex" flexDirection="column" gap={2}>
+                {results?.length ? (
+                  results.map((sub) => <ResultsCard key={sub.name} substitute={sub} />)
+                ) : (
+                  <Typography variant="body2" color="text.secondary">
+                    No substitutions found for this ingredient. Try expanding the recipe types.
+                  </Typography>
+                )}
+              </Box>
+            </>
+          )}
 
           {/* Footer */}
-          <p className="mt-8 text-center text-sm text-zinc-500">
+          <Typography variant="caption" display="block" textAlign="center" mt={4} color="text.secondary">
             Substitutions are based on baking science and common kitchen practices.
-          </p>
-        </main>
-      </div>
-    </div>
+          </Typography>
+        </Paper>
+      </Box>
+    </Box>
   );
 }

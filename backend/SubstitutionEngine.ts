@@ -6,9 +6,9 @@ import dataJson from '@/data/substitutions.json';
 const data = dataJson as SubstitutionJson[];
 export type SubstitutionJson = {
 	ingredient: string;
-	recipeTypes: RecipeType[];
 	substitutes: {
 		name: string;
+		recipeTypes: RecipeType[];
 		baseAmount: IngredientAmount;
 		substitution: IngredientAmount[];
 		instructions?: string;
@@ -50,6 +50,7 @@ class SubstitutionEngine {
 						s.tags,
 						s.effects,
 						s.confidence,
+						s.recipeTypes,
 						s.instructions
 					)
 			);
@@ -57,8 +58,7 @@ class SubstitutionEngine {
 				return ["cake", "cookie", "bread", "other", "pancakes", "waffles"].includes(value);
 			  }
 			  
-			  const recipeTypes = elem.recipeTypes.filter(isRecipeType) as RecipeType[];
-			const ingredient = new Ingredient(elem.ingredient, recipeTypes, substitutes);
+			const ingredient = new Ingredient(elem.ingredient, substitutes);
 			this.ingredientMap.set(elem.ingredient.toLowerCase(), ingredient);
 		});
 	}
@@ -84,30 +84,31 @@ class SubstitutionEngine {
 	  }
 	
 
-	getSubstitutes(
+	  getSubstitutes(
 		ingredientName: string,
-		recipeType: RecipeType,
+		recipeTypes: RecipeType[],
 		tags: string[] = []
-	): Substitute[] {
+	  ): Substitute[] {
 		const ingredient = this.getIngredient(ingredientName);
 		if (!ingredient) return [];
-
-		if (!ingredient.recipeTypes.includes(recipeType)) return [];
-
+	  
 		return ingredient.substitutes
-			.filter((s) => tags.every((t) => s.tags.includes(t)))
-			.filter((s) => s.confidence >= 0.6)
-			.sort((a, b) => {
-				if (b.confidence !== a.confidence) {
-					return b.confidence - a.confidence;
-				}
-				// Prefer substitutes with more known effects
-				return (
-					Object.keys(b.effects).length -
-					Object.keys(a.effects).length
-				);
-			});
-	}
+		  // Keep substitutes that match at least one of the requested recipe types
+		  .filter(sub =>
+			sub.recipeTypes?.some(rt => recipeTypes.includes(rt as RecipeType)) ?? true
+		  )
+		  // Filter by tags
+		  .filter(sub => tags.every(t => sub.tags.includes(t)))
+		  // Only include substitutes with confidence >= 0.6
+		  .filter(sub => sub.confidence >= 0.6)
+		  // Sort by confidence, then by number of known effects
+		  .sort((a, b) => {
+			if (b.confidence !== a.confidence) {
+			  return b.confidence - a.confidence;
+			}
+			return Object.keys(b.effects).length - Object.keys(a.effects).length;
+		  });
+	  }
 
 	summarizeEffects(effects: Effects): string {
 		if (!effects || Object.keys(effects).length === 0) {
