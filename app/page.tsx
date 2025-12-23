@@ -5,7 +5,7 @@ import { RecipeType } from "@/backend/Ingredient";
 import { DietaryPreferenceSelector } from "@/components/DietaryPreferenceSelector";
 import { IngredientSelector } from "@/components/IngredientSelector";
 import { ALL_RECIPE_TYPES, RecipeTypeSelector } from "@/components/RecipeTypeSelector";
-import { ResultsCard } from "@/components/ResultsCard";
+import { GptExplanationResponse, ResultsCard } from "@/components/ResultsCard";
 import { useState } from "react";
 import { Button, Tooltip, Paper, Typography, Box } from "@mui/material";
 import { engine } from "@/backend/SubstitutionEngine";
@@ -20,6 +20,9 @@ export default function Home() {
   const [recipeType, setRecipeType] = useState<RecipeType[]>([...ALL_RECIPE_TYPES]);
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState<Substitute[] | null>(null);
+  const [gptExplanations, setGptExplanations] = useState<Record<string, GptExplanationResponse>>({});
+  const [gptLoading, setGptLoading] = useState<Record<string, boolean>>({});
+
 
   const handleSubmit = () => {
     if (!ingredient) return;
@@ -33,6 +36,39 @@ export default function Home() {
 
     setResults(substitutes);
     setShowResults(true);
+  };
+
+  const fetchExplanation = async (sub: Substitute) => {
+    if (gptLoading[sub.name] || gptExplanations[sub.name]) return;
+
+    setGptLoading((prev) => ({ ...prev, [sub.name]: true }));
+
+    try {
+      const res = await fetch("/api/explanation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ingredient,
+          substitute: sub.name,
+          baseAmount: sub.baseAmount,
+          substitution: sub.substitution,
+          instructions: sub.instructions,
+          recipeTypes: recipeType,
+          effects: sub.effects,
+        }),
+      });
+
+      const data = await res.json();
+      console.log(data);
+      setGptExplanations((prev) => ({
+        ...prev,
+        [sub.name]: data,
+      }));
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setGptLoading((prev) => ({ ...prev, [sub.name]: false }));
+    }
   };
 
   return (
@@ -132,7 +168,17 @@ export default function Home() {
               {/* Results */}
               <Box display="flex" flexDirection="column" gap={2}>
                 {results?.length ? (
-                  results.map((sub) => <ResultsCard key={sub.name} substitute={sub} />)
+                  results.map((sub) => (
+                    <ResultsCard
+                      key={sub.name}
+                      substitute={{
+                        ...sub,
+                        gptExplanation: gptExplanations[sub.name] || undefined,
+                        gptExplanationLoading: gptLoading[sub.name],
+                      }}
+                      onFetchExplanation={() => fetchExplanation(sub)}
+                    />
+                  ))
                 ) : (
                   <Typography variant="body2" color="text.secondary">
                     No substitutions found for this ingredient. Try expanding the recipe types.

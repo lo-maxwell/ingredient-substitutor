@@ -38,6 +38,23 @@
 			"tags": ["vegetarian", "gluten free"],
 			"effects": { "rise": "less", "flavor": "more tangy" },
 			"confidence": 0.8
+		  },
+		  {
+			"name": "yeast",
+			"recipeTypes": ["cake", "cookie"],
+			"baseAmount": {
+			  "ingredient": "baking soda",
+			  "quantity": 1,
+			  "unit": "teaspoon"
+			},
+			"substitution": [
+			  { "ingredient": "active dry yeast", "quantity": 1, "unit": "teaspoon" }
+			],
+			"tags": ["vegetarian"],
+			"effects": {
+			  "rise": "similar"
+			},
+			"confidence": 0.85
 		  }
 		]
 	  },
@@ -406,7 +423,7 @@
 			  "unit": "cup"
 			},
 			"substitution": [
-			  { "ingredient": "granulated sugar", "quantity": 0.5, "unit": "cup" }
+			  { "ingredient": "ground granulated sugar", "quantity": 0.5, "unit": "cup" }
 			],
 			"instructions": "Grind in blender until fine",
 			"tags": ["vegetarian", "gluten free"],
