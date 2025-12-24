@@ -40,6 +40,7 @@ type ResultsCardProps = {
 		gptExplanationLoading?: boolean;
 	};
 	onFetchExplanation: () => void;
+	gptDisabled?: boolean;
 };
 
 // Helper to convert a decimal to a simplified fraction string
@@ -66,7 +67,7 @@ function toFraction(num: number): string {
 	return `${whole} ${numerator}/${simplifiedDenominator}`;
 }
 
-export function ResultsCard({ substitute, onFetchExplanation }: ResultsCardProps) {
+export function ResultsCard({ substitute, onFetchExplanation, gptDisabled }: ResultsCardProps) {
 	const theme = useTheme();
 	const confidencePercent = Math.round(substitute.confidence * 100);
 
@@ -236,15 +237,21 @@ export function ResultsCard({ substitute, onFetchExplanation }: ResultsCardProps
 					Why does this substitution work?
 				</Typography>
 
-				{!substitute.gptExplanation?.verdict && !substitute.gptExplanationLoading && (
-					<Chip
-						label="Generate explanation"
-						color="primary"
-						onClick={onFetchExplanation}
-						clickable
-						sx={{ fontWeight: 500 }}
-					/>
-				)}
+				{(!substitute.gptExplanation?.verdict) &&
+					!substitute.gptExplanationLoading && (
+						<Chip
+							label={gptDisabled ? "Please wait…" : "Generate explanation"}
+							color="primary"
+							onClick={!gptDisabled ? onFetchExplanation : undefined}
+							clickable={!gptDisabled}
+							disabled={gptDisabled}
+							sx={{
+								fontWeight: 500,
+								opacity: gptDisabled ? 0.6 : 1,
+								cursor: gptDisabled ? "not-allowed" : "pointer",
+							}}
+						/>
+					)}
 
 				{substitute.gptExplanationLoading && (
 					<Typography

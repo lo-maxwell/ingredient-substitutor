@@ -7,7 +7,7 @@ import { IngredientSelector } from "@/components/IngredientSelector";
 import { ALL_RECIPE_TYPES, RecipeTypeSelector } from "@/components/RecipeTypeSelector";
 import { GptExplanationResponse, ResultsCard } from "@/components/ResultsCard";
 import { useState } from "react";
-import { Button, Tooltip, Paper, Typography, Box } from "@mui/material";
+import { Snackbar, Alert, Button, Tooltip, Paper, Typography, Box } from "@mui/material";
 import { engine } from "@/backend/SubstitutionEngine";
 import { Substitute } from "@/backend/Substitute";
 
@@ -22,7 +22,9 @@ export default function Home() {
   const [results, setResults] = useState<Substitute[] | null>(null);
   const [gptExplanations, setGptExplanations] = useState<Record<string, GptExplanationResponse>>({});
   const [gptLoading, setGptLoading] = useState<Record<string, boolean>>({});
-
+  const [rateLimitOpen, setRateLimitOpen] = useState(false);
+  const [gptCooldownUntil, setGptCooldownUntil] = useState<number | null>(null);
+  const isInCooldown = gptCooldownUntil !== null && Date.now() < gptCooldownUntil;
 
   const handleSubmit = () => {
     if (!ingredient) return;
@@ -57,6 +59,23 @@ export default function Home() {
           effects: sub.effects,
         }),
       });
+
+      if (res.status === 429) {
+        setRateLimitOpen(true);
+
+        const cooldownMs = 10_000;
+        setGptCooldownUntil(Date.now() + cooldownMs);
+
+        setTimeout(() => {
+          setGptCooldownUntil(null);
+        }, cooldownMs);
+
+        return;
+      }
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch explanation");
+      }
 
       const data = await res.json();
       console.log(data);
@@ -177,6 +196,7 @@ export default function Home() {
                         gptExplanationLoading: gptLoading[sub.name],
                       }}
                       onFetchExplanation={() => fetchExplanation(sub)}
+                      gptDisabled={isInCooldown}
                     />
                   ))
                 ) : (
@@ -194,6 +214,29 @@ export default function Home() {
           </Typography>
         </Paper>
       </Box>
+      <Snackbar
+        open={rateLimitOpen}
+        autoHideDuration={4000}
+        onClose={() => setRateLimitOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setRateLimitOpen(false)}
+          severity="info"
+          sx={{
+            width: "100%",
+            backgroundColor: "#F0F7FF",
+            color: "#0B3C5D",
+            border: "1px solid #90CAF9",
+            borderRadius: 2,
+            "& .MuiAlert-icon": {
+              color: "#2196F3",
+            },
+          }}
+        >
+          You’re making requests too quickly. Please slow down and try again.
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
