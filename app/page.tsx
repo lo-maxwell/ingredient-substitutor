@@ -96,8 +96,8 @@ export default function Home() {
         minHeight: "100vh",
         backgroundColor: theme.palette.background.default,
         color: theme.palette.text.primary,
-        py: 6,
-        px: 6,
+        py: { xs: 3, sm: 4, md: 6 },
+        px: { xs: 2, sm: 4, md: 6 },
       }}
     >
       <Box display="flex" justifyContent="center">
@@ -107,7 +107,7 @@ export default function Home() {
             width: "100%",
             maxWidth: 720,
             borderRadius: 3,
-            p: 4,
+            p: { xs: 2, sm: 3, md: 4 },
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.text.primary,
           }}
