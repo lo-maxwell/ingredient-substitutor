@@ -13,10 +13,9 @@ type RecipeTypeSelectorProps = {
 export const ALL_RECIPE_TYPES: RecipeType[] = [
   "cake",
   "cookie",
-  "bread",
-  "pancakes",
-  "waffles",
-  "dessert",
+  "quick bread",
+  "yeast bread",
+  "pancake",
   "other",
 ];
 

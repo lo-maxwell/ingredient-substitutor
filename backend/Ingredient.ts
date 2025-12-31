@@ -3,10 +3,9 @@ import { Substitute } from "./Substitute";
 export type RecipeType =
   | "cake"
   | "cookie"
-  | "bread"
-  | "pancakes"
-  | "waffles"
-  | "dessert"
+  | "quick bread"
+  | "yeast bread"
+  | "pancake"
   | "other";
 
 export class Ingredient {

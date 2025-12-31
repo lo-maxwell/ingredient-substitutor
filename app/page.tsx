@@ -117,7 +117,7 @@ export default function Home() {
               {/* Header */}
               <Box textAlign="center" mb={6}>
                 <Typography variant="h2" fontWeight={600}>
-                  Baking Ingredient Substitutor
+                  Baking Ingredient Substituter
                 </Typography>
                 <Typography variant="body1" color="text.secondary" mt={1}>
                   Instantly find reliable ingredient substitutions and understand how they’ll affect your recipe.
