@@ -13,7 +13,6 @@ import { Substitute } from "@/backend/Substitute";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getSearchHistory, saveSearch } from "@/backend/SearchHistory";
 import { SearchHistoryItem } from "@/backend/SearchHistoryItem";
-import { SearchHistoryPanel } from "@/components/SearchHistoryPanel";
 import HistoryIcon from "@mui/icons-material/History";
 import { SearchHistoryDrawer } from "@/components/SearchHistoryDrawer";
 

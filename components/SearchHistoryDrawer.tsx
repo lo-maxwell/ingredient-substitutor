@@ -20,6 +20,23 @@ type Props = {
 	onClear: () => void;
 };
 
+function formatRelativeTime(timestamp: number): string {
+	const now = Date.now();
+	const diffMs = now - timestamp;
+
+	const seconds = Math.floor(diffMs / 1000);
+	const minutes = Math.floor(seconds / 60);
+	const hours = Math.floor(minutes / 60);
+	const days = Math.floor(hours / 24);
+
+	if (seconds < 60) return "just now";
+	if (minutes < 60) return `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
+	if (hours < 24) return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
+	if (days < 7) return `${days} day${days !== 1 ? "s" : ""} ago`;
+
+	return new Date(timestamp).toLocaleDateString();
+}
+
 export function SearchHistoryDrawer({
 	open,
 	onClose,
@@ -97,27 +114,32 @@ export function SearchHistoryDrawer({
 								},
 							}}
 						>
-							<Typography fontWeight={500}>
-								{item.ingredient}
-							</Typography>
+							<Box display="flex" justifyContent="space-between" alignItems="baseline">
+								<Typography fontWeight={500}>
+									{item.ingredient}
+								</Typography>
 
-							<Stack
-								direction="row"
-								spacing={0.5}
-								flexWrap="wrap"
-								mt={0.5}
-							>
-								{item.recipeTypes.map(r => (
-									<Chip key={r} label={r} size="small" />
-								))}
-								{item.tags.map(t => (
-									<Chip
-										key={t}
-										label={t}
-										size="small"
-										variant="outlined"
-									/>
-								))}
+								<Typography
+									variant="caption"
+									color="text.secondary"
+									whiteSpace="nowrap"
+								>
+									{formatRelativeTime(item.timestamp)}
+								</Typography>
+							</Box>
+
+							<Stack spacing={0.25} mt={0.5}>
+								{item.recipeTypes.length > 0 && (
+									<Typography variant="caption" color="text.secondary">
+										<strong>Types:</strong> {item.recipeTypes.join(" · ")}
+									</Typography>
+								)}
+
+								{item.tags.length > 0 && (
+									<Typography variant="caption" color="text.secondary">
+										<strong>Tags:</strong> {item.tags.join(" · ")}
+									</Typography>
+								)}
 							</Stack>
 						</Box>
 					))}
