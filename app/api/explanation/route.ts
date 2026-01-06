@@ -5,10 +5,30 @@ import OpenAI from "openai";
 
 import crypto from "crypto";
 import { Redis } from "@upstash/redis";
+import { Substitute } from "@/backend/Substitute";
+import { engine } from "@/backend/SubstitutionEngine";
+import { isRecipeType } from "@/backend/Ingredient";
 
 const openai = new OpenAI({
 	apiKey: process.env.OPENAI_API_KEY!,
 });
+
+function findMatchingSubstitution(payload: ExplanationPayload): Substitute | null {
+	const recipeTypes = payload.recipeTypes.filter(isRecipeType);
+	const candidates = engine.getSubstitutes(
+	  payload.ingredient,
+	  recipeTypes,
+	  [] // dietary tags don't affect explanation validity
+	);
+  
+	return (
+	  candidates.find(sub =>
+		sub.name === payload.substitute &&
+		JSON.stringify(sub.baseAmount) === JSON.stringify(payload.baseAmount) &&
+		JSON.stringify(sub.substitution) === JSON.stringify(payload.substitution)
+	  ) ?? null
+	);
+  }
 
 function isValidExplanation(obj: unknown): obj is GptExplanationResponse {
 	if (!obj || typeof obj !== "object") return false;
@@ -82,7 +102,33 @@ export async function POST(req: NextRequest) {
 	const redis = Redis.fromEnv();
 
 	const body = await req.json();
-	const cacheKey = `gpt:explanation:${createCacheKey(body)}`;
+	engine.init();
+	const matchedSubstitution = findMatchingSubstitution(body);
+	if (!matchedSubstitution) {
+	return NextResponse.json(
+		{
+		error: "Invalid substitution request",
+		verdict: "INVALID",
+		reasons: [
+			"This substitution does not exist in our verified dataset.",
+		],
+		practicalNotes: [
+			"Please select a substitution from the provided results.",
+		],
+		},
+		{ status: 400 }
+	);
+	}
+
+	const cacheKey = `gpt:explanation:${createCacheKey({
+		ingredient: matchedSubstitution.baseAmount.ingredient,
+		substitute: matchedSubstitution.name,
+		baseAmount: matchedSubstitution.baseAmount,
+		substitution: matchedSubstitution.substitution,
+		recipeTypes: body.recipeTypes,
+		instructions: matchedSubstitution.instructions,
+		effects: matchedSubstitution.effects,
+	  })}`;
 	const cached = await redis.get<GptExplanationResponse>(cacheKey);
 	if (cached) {
 		return NextResponse.json({
@@ -90,15 +136,23 @@ export async function POST(req: NextRequest) {
 			cached: true,
 		});
 	}
-	const {
-		ingredient,
-		substitute,       // string (name)
-		baseAmount,       // IngredientAmount
-		substitution,     // IngredientAmount[]
-		instructions, 	  // string | undefined
-		recipeTypes,      // string[]
-		effects,          // Record<string, string>
-	} = body;
+
+	// const ingredient = matchedSubstitution.ingredient;
+	const substitution = matchedSubstitution.substitution;
+	const baseAmount = matchedSubstitution.baseAmount;
+	const instructions = matchedSubstitution.instructions;
+	const recipeTypes = matchedSubstitution.recipeTypes;
+	const effects = matchedSubstitution.effects;
+	// const {
+	// 	ingredient,
+	// 	substitute,       // string (name)
+	// 	baseAmount,       // IngredientAmount
+	// 	substitution,     // IngredientAmount[]
+	// 	instructions, 	  // string | undefined
+	// 	recipeTypes,      // string[]
+	// 	effects,          // Record<string, string>
+	// } = body;
+
 
 	const prompt = `
 	You are a professional baking scientist.

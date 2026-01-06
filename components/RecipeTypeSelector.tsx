@@ -3,21 +3,13 @@
 import { Autocomplete, Checkbox, TextField } from "@mui/material";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { RecipeType } from "@/backend/Ingredient";
+import { ALL_RECIPE_TYPES, RecipeType } from "@/backend/Ingredient";
 
 type RecipeTypeSelectorProps = {
   value: RecipeType[];
   onChange: (value: RecipeType[]) => void;
 };
 
-export const ALL_RECIPE_TYPES: RecipeType[] = [
-  "cake",
-  "cookie",
-  "quick bread",
-  "yeast bread",
-  "pancake",
-  "other",
-];
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;

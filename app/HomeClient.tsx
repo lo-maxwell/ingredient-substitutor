@@ -1,10 +1,10 @@
 "use client";
 
 import { useTheme } from "@mui/material/styles";
-import { RecipeType } from "@/backend/Ingredient";
+import { ALL_RECIPE_TYPES, RecipeType } from "@/backend/Ingredient";
 import { DietaryPreferenceSelector } from "@/components/DietaryPreferenceSelector";
 import { IngredientSelector } from "@/components/IngredientSelector";
-import { ALL_RECIPE_TYPES, RecipeTypeSelector } from "@/components/RecipeTypeSelector";
+import { RecipeTypeSelector } from "@/components/RecipeTypeSelector";
 import { GptExplanationResponse, ResultsCard } from "@/components/ResultsCard";
 import { useEffect, useRef, useState } from "react";
 import { Snackbar, Alert, Button, Tooltip, Paper, Typography, Box, IconButton } from "@mui/material";
@@ -192,7 +192,6 @@ export default function Home() {
 			}
 
 			const data = await res.json();
-			console.log(data);
 			setGptExplanations((prev) => ({
 				...prev,
 				[sub.name]: data,
