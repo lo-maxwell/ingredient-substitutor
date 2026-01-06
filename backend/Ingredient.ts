@@ -1,12 +1,19 @@
 import { Substitute } from "./Substitute";
 
-export type RecipeType =
-  | "cake"
-  | "cookie"
-  | "quick bread"
-  | "yeast bread"
-  | "pancake"
-  | "other";
+export const ALL_RECIPE_TYPES = [
+  "cake",
+  "cookie",
+  "quick bread",
+  "yeast bread",
+  "pancake",
+  "other",
+];
+
+export type RecipeType = typeof ALL_RECIPE_TYPES[number];
+
+export function isRecipeType(value: string): value is RecipeType {
+  return (ALL_RECIPE_TYPES as readonly string[]).includes(value);
+}
 
 export class Ingredient {
   name: string;

@@ -13,8 +13,6 @@ export function getSearchHistory(): SearchHistoryItem[] {
 }
 
 export function saveSearch(item: SearchHistoryItem): SearchHistoryItem[] {
-  console.log('saved item ');
-  console.log(item);
   if (typeof window === "undefined") return [];
 
   const history = getSearchHistory();
