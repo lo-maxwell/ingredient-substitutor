@@ -16,7 +16,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: {
@@ -25,11 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <script type="application/ld+json" src="/schema/website.json" />
       </head>
       <body>
-      <ThemeProvider theme={lightTheme}>
-        {children}
-      </ThemeProvider>
+        <ThemeProvider theme={lightTheme}>{children}</ThemeProvider>
       </body>
     </html>
   );

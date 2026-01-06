@@ -230,10 +230,10 @@ export default function Home() {
 						<>
 							{/* Header */}
 							<Box textAlign="center" mb={6}>
-								<Typography variant="h2" fontWeight={600}>
+								<Typography component="h1" variant="h2" fontWeight={600}>
 									Baking Ingredient Substituter
 								</Typography>
-								<Typography variant="body1" color="text.secondary" mt={1}>
+								<Typography component="h2" variant="body1" color="text.secondary" mt={1}>
 									Instantly find reliable ingredient substitutions and understand how they’ll affect your recipe.
 								</Typography>
 							</Box>
@@ -241,21 +241,21 @@ export default function Home() {
 							{/* Form */}
 							<Box display="flex" flexDirection="column" gap={3}>
 								<Box>
-									<Typography variant="body2" fontWeight={500} mb={1}>
+									<Typography component="h3" variant="body2" fontWeight={500} mb={1}>
 										Recipe Type
 									</Typography>
 									<RecipeTypeSelector value={recipeType} onChange={setRecipeType} />
 								</Box>
 
 								<Box>
-									<Typography variant="body2" fontWeight={500} mb={1}>
+									<Typography component="h3" variant="body2" fontWeight={500} mb={1}>
 										Ingredient to Substitute
 									</Typography>
 									<IngredientSelector value={ingredient} onChange={setIngredient} />
 								</Box>
 
 								<Box>
-									<Typography variant="body2" fontWeight={500} mb={1}>
+									<Typography component="h3" variant="body2" fontWeight={500} mb={1}>
 										Dietary Preferences
 									</Typography>
 									<DietaryPreferenceSelector value={pref} onChange={setPref} />
