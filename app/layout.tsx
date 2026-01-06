@@ -24,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+      <meta name="google-site-verification" content="SfPj_WTSxLXjEqapUeg8vCbrsf663k4ISSuuEkhru2E" />
         <script type="application/ld+json" src="/schema/website.json" />
       </head>
       <body>
